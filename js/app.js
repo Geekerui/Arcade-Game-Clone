@@ -1,10 +1,10 @@
 "use strict";
-//TODO 昆虫速度单一
 var CELL_WIDTH = 101;//每一个方块的宽度
 var CELL_HEIGHT = 83;//每一个方块的高度
-var k = 12;//用于校准敌人在方块中的上下位置的系数
+var k = 12;          //用于校准敌人在方块中的上下位置的系数
+
 // 这是我们的玩家要躲避的敌人
-var Enemy = function (x, y, speed) {
+var Enemy = function (x, y) {
     // 要应用到每个敌人的实例的变量写在这里
     // 我们已经提供了一个来帮助你实现更多
     this.x = x;
@@ -27,7 +27,7 @@ Enemy.prototype.update = function (dt) {
 };
 
 Enemy.prototype.getRandom = function () {
-    return Math.floor((Math.random() + 0.3) * 300);
+    return Math.floor((Math.random() + 0.3) * 200);
 };
 
 // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -38,7 +38,6 @@ Enemy.prototype.render = function () {
 //玩家被敌人碰到后的检查机制
 Enemy.prototype.checkCollisions = function (player) {
     if (Math.abs(player.x - this.x) < 70 && player.y - k === this.y) {//昆虫位置加上图片宽度检测图片是否与玩家重合
-        //TODO  页面显示得分和生命剩余数量
         if (player.lives > 1) {
             player.lives -= 1;
             document.querySelector(".lives").innerHTML = "Lives: " + player.lives;
@@ -105,7 +104,7 @@ Player.prototype.outOfArea = function () {
         this.y = CELL_WIDTH * 4;
     }
     if (this.y <= 0) {
-        //TODO 过河成功后
+        // 过河成功后显示分数和生命剩余数量
         this.score += 100;
         document.querySelector(".score").innerHTML = "Score: " + this.score;
         this.reset();
@@ -117,13 +116,21 @@ Player.prototype.reset = function () {
     this.y = CELL_HEIGHT * 4.7;
 };
 
+var getRandomInt = function (min, max) {
+    min = Math.ceil(Math.random());
+    max = Math.floor(Math.random());
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
 //  现在实例化你的所有对象
 // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
 //将敌人放置于方块中间，因此初始位置以72为准减掉一个系数
 var myEnemy1 = new Enemy(0, 72 - k);
 var myEnemy2 = new Enemy(0, 72 - k + CELL_HEIGHT);
 var myEnemy3 = new Enemy(0, 72 - k + CELL_HEIGHT * 2);
-var allEnemies = [myEnemy1, myEnemy2, myEnemy3];
+var myEnemy4 = new Enemy(-getRandomInt(0, 20), 72 - k);
+var myEnemy5 = new Enemy(-getRandomInt(0, 40), 72 - k + CELL_HEIGHT);
+var myEnemy6 = new Enemy(-getRandomInt(0, 60), 72 - k + CELL_HEIGHT * 2);
+var allEnemies = [myEnemy1, myEnemy2, myEnemy3, myEnemy4, myEnemy5, myEnemy6];
 
 // 把玩家对象放进一个叫 player 的变量里面，传入Player起始位置
 //地图宽度为方块X坐标序号，起始位置位于X轴中间
