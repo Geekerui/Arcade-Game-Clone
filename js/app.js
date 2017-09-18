@@ -43,7 +43,7 @@ Enemy.prototype.checkCollisions = function (player) {
             document.querySelector(".lives").innerHTML = "Lives: " + player.lives;
             player.reset();
         } else {
-            alert("GAME OVER");
+            alert("GAME OVER. Your score is: " + player.score);
             player.lives = 3;//恢复生命值
             player.score = 0;//得分清零
             document.querySelector(".lives").innerHTML = "Lives: " + player.lives;
