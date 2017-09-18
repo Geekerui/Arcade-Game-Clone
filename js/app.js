@@ -89,7 +89,8 @@ Player.prototype.handleInput = function (playerKeyCode) {
             this.y += moveVerticalLength;
             break;
     }
-    console.log("POSITION:__X" + this.x + "POSITION:__Y" + this.y);
+    //观察每次移动坐标
+    // console.log("POSITION:__X" + this.x + "POSITION:__Y" + this.y);
 };
 
 //防止玩家走出边界机制
@@ -111,11 +112,13 @@ Player.prototype.outOfArea = function () {
     }
 };
 
+//重置玩家位置
 Player.prototype.reset = function () {
     this.x = CELL_WIDTH * 2;
     this.y = CELL_HEIGHT * 4.7;
 };
 
+//随机数用来随机产生屏幕外敌人位置
 var getRandomInt = function (min, max) {
     min = Math.ceil(Math.random());
     max = Math.floor(Math.random());
